@@ -30,7 +30,8 @@ import {
   UserX2Icon,
   X,
   Files,
-  BookmarkPlus
+  BookmarkPlus,
+  Blocks
 } from 'lucide-react';
 
 export type Icon = LucideIcon;
@@ -82,5 +83,6 @@ export const Icons = {
     </svg>
   ),
   twitter: Twitter,
-  check: Check
+  check: Check,
+  block: Blocks
 };

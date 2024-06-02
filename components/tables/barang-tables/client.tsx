@@ -24,7 +24,7 @@ export const ListBarang: React.FC<DatabarangProps> = ({ data }) => {
         />
         <Button
           className="text-xs md:text-sm"
-          onClick={() => router.push(`/dashboard/databarang/new`)}
+          onClick={() => router.push(`/data-barang/new`)}
         >
           <Plus className="mr-2 h-4 w-4" /> Add New
         </Button>

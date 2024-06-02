@@ -40,23 +40,16 @@ export default function AuthenticationPage() {
           Warehouse Dry
         </div>
         <div className="relative z-20 flex items-center">
-        <Image
-      src="/warehouse.png"
-      width={500}
-      height={500}
-      alt="Picture of the author"
-    />
+          <Image
+            src="/warehouse.png"
+            alt="Warehouse"
+            title="Warehouse"
+            width={0}
+            height={0}
+            className='w-full h-auto'
+            unoptimized
+          />
         </div>
-        {/* <div className="relative z-20 mt-auto">
-          <blockquote className="space-y-2">
-            <p className="text-lg">
-              &ldquo;This library has saved me countless hours of work and
-              helped me deliver stunning designs to my clients faster than ever
-              before.&rdquo;
-            </p>
-            <footer className="text-sm">Sofia Davis</footer>
-          </blockquote>
-        </div> */}
       </div>
       <div className="flex h-full items-center p-4 lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">

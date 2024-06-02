@@ -1,5 +1,4 @@
 'use client';
-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -32,8 +31,6 @@ export function DashboardNav({
   if (!items?.length) {
     return null;
   }
-
-  console.log('isActive', isMobileNav, isMinimized);
 
   return (
     <nav className="grid items-start gap-2">

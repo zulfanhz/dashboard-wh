@@ -14,8 +14,6 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
-import { Heading } from '@/components/ui/heading';
-import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -23,6 +21,8 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
+import { Heading } from '@/components/ui/heading';
+import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { barangSchema, type BarangFormValues } from '@/lib/form-brg-schema';
 import { cn } from '@/lib/utils';
@@ -32,29 +32,32 @@ import { useParams, useRouter } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { BrowserMultiFormatReader } from "@zxing/library";
+import axios from 'axios';
 
 interface ProfileFormType {
   initialData: any | null;
   categories: any;
 }
 
+
+const urut_satuan = [{ id: 1, name: 'urutan Ke-1'},{id: 2, name: 'urutan Ke-2'},{id: 3, name: 'urutan Ke-3'} ];
+const sat_utama = [{ id: 1, name: 'Ya' },{ id: 2, name: 'Tidak' }];
+
 export const CreateDataBarang: React.FC<ProfileFormType> = ({
   initialData,
   categories
 }) => {
-  const [isScanning, setIsScanning] = useState(false);
-  const [barcode, setBarcode] = useState("");
-  const videoRef = useRef(null);
-  const codeReader = useRef(new BrowserMultiFormatReader());
   const params = useParams();
   const router = useRouter();
+  const codeReader = useRef(new BrowserMultiFormatReader());
+  const [isScanning, setIsScanning] = useState(false);
+  const videoRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [imgLoading, setImgLoading] = useState(false);
   const title = initialData ? 'Edit product' : 'Master Barang';
   const description = initialData
     ? 'Edit a product.'
-    : 'masukkan informasi untuk master barang.';
+    : 'Masukkan informasi untuk master barang.';
   const toastMessage = initialData ? 'Product updated.' : 'Product created.';
   const action = initialData ? 'Save changes' : 'Create';
   const [previousStep, setPreviousStep] = useState(0);
@@ -62,47 +65,23 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
   const [data, setData] = useState({});
   const delta = currentStep - previousStep;
 
-  const startScanner = () => {
-    setIsScanning(true);
-  };
+  const getDataById = async () => {
+    const results = await axios.get('url', {
+      headers: {
+        Authorization: 'Bearer ' // Add token
+      }
+    })
 
-  const stopScanner = () => {
-    codeReader.current.reset();
-    setIsScanning(false);
-  };
-
-  useEffect(() => {
-    if (isScanning && videoRef.current) {
-      codeReader.current.decodeFromVideoDevice(
-        null,
-        videoRef.current,
-        (result, err) => {
-          if (result) {
-            setBarcode(result.getText()); // Use the getText() method to access the text property
-            stopScanner();
-          }
-          if (err) {
-            // Ignore not found exceptions and only log other errors
-            console.error(err);
-          }
-        }
-      );
-    }
-  }, [isScanning]);
-
-  useEffect(() => {
-    return () => {
-      stopScanner(); // Clean up the scanner on unmount
-    };
-  }, []);
+    setData(results)
+  }
 
   const defaultValues = {
     satuan: [
       {
         satuan: '',
         qty: 0,
-        urutan_satuan: "",
-        satuan_utama: ""        
+        urutan_satuan: 0,
+        satuan_utama: 0        
       }
     ]
   };
@@ -117,24 +96,76 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
     control,
     formState: { errors }
   } = form;
-
   const { append, remove, fields } = useFieldArray({
     control,
     name: 'satuan'
   });
 
-  const onSubmit = async (data: BarangFormValues) => {
+  const startScanner = () => {
+    setIsScanning(true);
+  };
+
+  const stopScanner = () => {
+    codeReader.current.reset();
+    setIsScanning(false);
+  };
+
+  useEffect(() => {
+    getDataById()
+  }, [params.id])
+
+  useEffect(() => {
+    if (isScanning && videoRef.current) {
+      codeReader.current.decodeFromVideoDevice(
+        null,
+        videoRef.current,
+        (result, err) => {
+          if (result) {
+            form.setValue('barcode', result.getText())
+            stopScanner();
+          }
+          if (err) {
+            console.error(err);
+          }
+        }
+      );
+    }
+  }, [isScanning]);
+
+  useEffect(() => {
+    return () => {
+      stopScanner(); // Clean up the scanner on unmount
+    };
+  }, []);
+
+  const onSubmit: SubmitHandler<BarangFormValues> = async (data: BarangFormValues) => {
+    const payload = {
+      barang: {
+        code: data.code,
+        nama: data.nama,
+        barcode: data.barcode
+      },
+      satuan: data.satuan.map((item: any) => {
+        return {
+          code: data.code,
+          satuan: item.satuan,
+          qty: item.qty,
+          urutan_satuan: parseInt(item.urutan_satuan),
+          satuan_utama: parseInt(item.satuan_utama)
+        }
+      })
+    }
+
     try {
       setLoading(true);
-      if (initialData) {
-        // await axios.post(`/api/products/edit-product/${initialData._id}`, data);
+      console.log('payload create', payload)
+      if (params.id === 'new') {
+        // axios post create
       } else {
-        // const res = await axios.post(`/api/products/create-product`, data);
-        // console.log("product", res);
+        // axios post update
       }
-      router.refresh();
-      router.push(`/dashboard/products`);
     } catch (error: any) {
+      console.log('error')
     } finally {
       setLoading(false);
     }
@@ -153,13 +184,6 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
     }
   };
 
-  const processForm: SubmitHandler<BarangFormValues> = (data) => {
-    console.log('data ==>', data);
-    setData(data);
-    // api call and reset
-    // form.reset();
-  };
-
   type FieldName = keyof BarangFormValues;
 
   const steps = [
@@ -171,18 +195,15 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
     {
       id: 'Step 2',
       name: 'Masukkan Item Barang',
-      // fields are mapping and flattening for the error to be trigger  for the dynamic fields
       fields: fields
         ?.map((_, index) => [
           `satuan.${index}.satuan`,
           `satuan.${index}.qty`,
           `satuan.${index}.urutan_satuan`,
           `satuan.${index}.satuan_utama`
-          // Add other field names as needed
         ])
         .flat()
-    },
-    { id: 'Step 3', name: 'Complete' }
+    }
   ];
 
   const next = async () => {
@@ -194,10 +215,7 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
 
     if (!output) return;
 
-    if (currentStep < steps.length - 1) {
-      if (currentStep === steps.length - 2) {
-        await form.handleSubmit(processForm)();
-      }
+    if (currentStep === 0) {
       setPreviousStep(currentStep);
       setCurrentStep((step) => step + 1);
     }
@@ -209,9 +227,6 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
       setCurrentStep((step) => step - 1);
     }
   };
-
-  const urutsatuan = [{ id: '1', name: 'urutan Ke-1'},{id: '2', name: 'urutan Ke-2'},{id: '3', name: 'urutan Ke-3'} ];
-  const satutama = [{ id: 2, name: 'Ya' },{ id: 3, name: 'Tidak' }];
 
   return (
     <>
@@ -265,7 +280,7 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
       <Separator />
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(processForm)}
+          onSubmit={form.handleSubmit(onSubmit)}
           className="w-full space-y-8"
         >
           <div
@@ -286,7 +301,8 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
                       <FormControl>
                         <Input
                           disabled={loading}
-                          placeholder="100051"
+                          placeholder="Kode Barang"
+                          defaultValue={params.id === 'new' ? '' : 'state data'}
                           {...field}
                         />
                       </FormControl>
@@ -303,7 +319,8 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
                       <FormControl>
                         <Input
                           disabled={loading}
-                          placeholder="LEMON TEA - NESTLE"
+                          placeholder="Nama Produk"
+                          defaultValue={params.id === 'new' ? '' : 'state data'}
                           {...field}
                         />
                       </FormControl>
@@ -320,10 +337,9 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
                       <FormControl>
                         <Input
                           disabled={loading}
-                          placeholder="123456789"
+                          placeholder="Barcode"
+                          defaultValue={params.id === 'new' ? '' : 'state data'}
                           {...field}
-                          onChange={(e) => setBarcode(e.target.value)}
-                          value={barcode}
                         />
                       </FormControl>
                       <FormMessage />
@@ -331,13 +347,13 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
                   )}
                 />
                 <Button
-        disabled={loading}
-        onClick={startScanner}
-        className="lg:absolute lg:right-4 lg:top-[46%] lg:h-[43px] md:self-end px-4"
-      >
-        Scan
-      </Button>
-      {isScanning && (
+                  disabled={loading}
+                  onClick={startScanner}
+                  className="lg:absolute lg:right-4 lg:top-[46%] lg:h-[43px] md:self-end px-4"
+                >
+                  Scan
+                </Button>
+                {isScanning && (
                   <div className="col-span-3 ml-32">
                     <video
                       ref={videoRef}
@@ -396,7 +412,8 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
                                   <Input
                                     type="text"
                                     disabled={loading}
-                                    placeholder="Kg/Pcs/Dus"
+                                    placeholder="KG / PCS / DUS"
+                                    defaultValue={params.id === 'new' ? '' : 'state data'}
                                     {...field}
                                   />
                                 </FormControl>
@@ -414,7 +431,7 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
                                   <Input
                                     type="number"
                                     disabled={loading}
-                                    placeholder="Isi Qty item barang"
+                                    placeholder="Quantity Barang"
                                     {...field}
                                   />
                                 </FormControl>
@@ -431,24 +448,22 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
                                 <Select
                                   disabled={loading}
                                   onValueChange={field.onChange}
-                                  value={field.value}
-                                  defaultValue={field.value}
                                 >
                                   <FormControl>
                                     <SelectTrigger>
                                       <SelectValue
                                         defaultValue={field.value}
-                                        placeholder="Select your job country"
+                                        placeholder="Select Order Unit"
                                       />
                                     </SelectTrigger>
                                   </FormControl>
                                   <SelectContent>
-                                    {urutsatuan.map((country) => (
+                                    {urut_satuan.map((item) => (
                                       <SelectItem
-                                        key={country.id}
-                                        value={country.id}
+                                        key={item.id}
+                                        value={item.id.toString()}
                                       >
-                                        {country.name}
+                                        {item.name}
                                       </SelectItem>
                                     ))}
                                   </SelectContent>
@@ -466,20 +481,18 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
                                 <Select
                                   disabled={loading}
                                   onValueChange={field.onChange}
-                                  value={field.value}
-                                  defaultValue={field.value}
                                 >
                                   <FormControl>
                                     <SelectTrigger>
                                       <SelectValue
                                         defaultValue={field.value}
-                                        placeholder="Satuan Utama"
+                                        placeholder="Select Main Unit"
                                       />
                                     </SelectTrigger>
                                   </FormControl>
                                   <SelectContent>
-                                    {satutama.map((item) => (
-                                      <SelectItem key={item.id} value={item.name}>
+                                    {sat_utama.map((item) => (
+                                      <SelectItem key={item.id} value={item.id.toString()}>
                                         {item.name}
                                       </SelectItem>
                                     ))}
@@ -504,8 +517,8 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
                       append({
                         satuan: '',
                         qty: 0,
-                        urutan_satuan: "",
-                        satuan_utama: ""
+                        urutan_satuan: 0,
+                        satuan_utama: 0
                       })
                     }
                   >
@@ -514,19 +527,15 @@ export const CreateDataBarang: React.FC<ProfileFormType> = ({
                 </div>
               </>
             )}
-            {currentStep === 2 && (
-              <div>
-                <h1>Completed</h1>
-                <pre className="whitespace-pre-wrap">
-                  {JSON.stringify(data)}
-                </pre>
-              </div>
-            )}
           </div>
 
-          {/* <Button disabled={loading} className="ml-auto" type="submit">
-            {action}
-          </Button> */}
+          {
+            currentStep === 1 && <div className='flex justify-end'>
+              <Button disabled={loading} type="submit">
+                {action}
+              </Button>
+            </div>
+          }
         </form>
       </Form>
       {/* Navigation */}
