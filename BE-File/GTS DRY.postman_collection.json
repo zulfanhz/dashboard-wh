@@ -1,0 +1,1274 @@
+{
+	"info": {
+		"_postman_id": "1fad5133-da19-453a-a3ee-54f04ba18cbf",
+		"name": "GTS DRY",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13210018",
+		"_collection_link": "https://ppa-dt.postman.co/workspace/PPA-DT-Workspace~38b5ef68-85d7-44ea-973f-5f7a959df701/collection/13210018-1fad5133-da19-453a-a3ee-54f04ba18cbf?action=share&source=collection_link&creator=13210018"
+	},
+	"item": [
+		{
+			"name": "Barang",
+			"item": [
+				{
+					"name": "Get Barang All",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/barang",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"barang"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Barang By Kode",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/barang/:kode",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"barang",
+								":kode"
+							],
+							"query": [
+								{
+									"key": "kode",
+									"value": "100059",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": "100059"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Simpan Barang",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"barang\": {\r\n        \"code\": \"BRG001\",\r\n        \"nama\": \"Tempe\",\r\n        \"barcode\": \"\"\r\n    },\r\n    \"satuan\": [\r\n        {\r\n            \"code\": \"BRG001\",\r\n            \"satuan\": \"pcs\",\r\n            \"qty\": 1,\r\n            \"urutan_satuan\": 1,\r\n            \"satuan_utama\": 1\r\n        },\r\n        {\r\n            \"code\": \"BRG001\",\r\n            \"satuan\": \"Dus\",\r\n            \"qty\": 40,\r\n            \"urutan_satuan\": 2,\r\n            \"satuan_utama\": 0\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/barang/",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"barang",
+								""
+							],
+							"query": [
+								{
+									"key": "kode",
+									"value": "100059",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Barang",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"barang\": {\r\n        \"code\": \"BRG001\",\r\n        \"nama\": \"TEMPE\",\r\n        \"barcode\": \"\"\r\n    },\r\n    \"satuan\": [\r\n        {\r\n            \"code\": \"BRG001\",\r\n            \"satuan\": \"Dus\",\r\n            \"qty\": 50,\r\n            \"urutan_satuan\": 2,\r\n            \"satuan_utama\": 0\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/barang/:kode",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"barang",
+								":kode"
+							],
+							"query": [
+								{
+									"key": "kode",
+									"value": "100059",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Barang",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/barang/:kode",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"barang",
+								":kode"
+							],
+							"query": [
+								{
+									"key": "kode",
+									"value": "100059",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": "BRG001"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Simpan Satuan di Barang",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"100052\",\r\n    \"satuan\": \"pcs\",\r\n    \"qty\": 1,\r\n    \"urutan_satuan\": 1,\r\n    \"satuan_utama\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/barang/satuan",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"barang",
+								"satuan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Satuan di Barang",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"100059\",\r\n    \"satuan\": \"pcs\",\r\n    \"qty\": 1,\r\n    \"urutan_satuan\": 1,\r\n    \"satuan_utama\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/barang/satuan/:kode/:satuan",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"barang",
+								"satuan",
+								":kode",
+								":satuan"
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": "100059"
+								},
+								{
+									"key": "satuan",
+									"value": "pcs"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Satuan di Barang",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/barang/satuan/:kode/:satuan/:ishitung",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"barang",
+								"satuan",
+								":kode",
+								":satuan",
+								":ishitung"
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": "100052"
+								},
+								{
+									"key": "satuan",
+									"value": "pack"
+								},
+								{
+									"key": "ishitung",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rak",
+			"item": [
+				{
+					"name": "Get Rak All",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/rak",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"rak"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rak By Kode Rak",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/rak/:kode",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"rak",
+								":kode"
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": "GCK2-R011A3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rak By Type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/rak/type/:type",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"rak",
+								"type",
+								":type"
+							],
+							"variable": [
+								{
+									"key": "type",
+									"value": "R10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rak By Product Code",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/rak/product/:kode",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"rak",
+								"product",
+								":kode"
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": "100050"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rak available incoming",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/rak/available/:kode/:exp",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"rak",
+								"available",
+								":kode",
+								":exp"
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": "100050"
+								},
+								{
+									"key": "exp",
+									"value": "2024-05-29"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Adjustment",
+			"item": [
+				{
+					"name": "Get Adjustment",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/adjustment",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"adjustment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Adjustment By Kode",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/adjustment/:kode",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"adjustment",
+								":kode"
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Adjustment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tanggal\": \"2024-05-24 13:10:10\",\r\n    \"product_code\": \"100050\",\r\n    \"rak_code\": \"GCK2-R011A4\",\r\n    \"qty\": 10,\r\n    \"satuan\": \"pcs\",\r\n    \"exp_date\": \"2024-05-20\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/adjustment",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"adjustment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Adjustment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tanggal\": \"2024-05-24 15:10:00\",\r\n    \"product_code\": \"100050\",\r\n    \"rak_code\": \"GCK2-R011A3\",\r\n    \"qty\": 10,\r\n    \"satuan\": \"pcs\",\r\n    \"exp_date\": \"2024-05-30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/adjustment/:kode",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"adjustment",
+								":kode"
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Adjustment",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/adjustment/:kode",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"adjustment",
+								":kode"
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Outgoing",
+			"item": [
+				{
+					"name": "Get Outgoing",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/outgoing",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"outgoing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Outgoing By Kode",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/outgoing/:kode",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"outgoing",
+								":kode"
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Outgoing",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tanggal\": \"2024-05-26 00:00:00\",\r\n    \"no_sj\": \"SJ12345\",\r\n    \"resto_code\": \"KDRJOY\",\r\n    \"product_code\": \"100050\",\r\n    \"exp_date\": \"2024-05-30\",\r\n    \"rak_code\": \"GCK2-R011A3\",\r\n    \"qty_sj\": 15,\r\n    \"qty_out\": 15,\r\n    \"satuan\": \"pcs\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/outgoing",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"outgoing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Outgoing",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tanggal\": \"2024-05-26 00:00:00\",\r\n    \"no_sj\": \"SJ12345\",\r\n    \"resto_code\": \"KDRJOY\",\r\n    \"product_code\": \"100050\",\r\n    \"exp_date\": \"2024-05-30\",\r\n    \"rak_code\": \"GCK2-R011A3\",\r\n    \"qty_sj\": 1,\r\n    \"qty_out\": 1,\r\n    \"satuan\": \"pcs\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/outgoing/:kode",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"outgoing",
+								":kode"
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Outgoing",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/outgoing/:kode",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"outgoing",
+								":kode"
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Incoming",
+			"item": [
+				{
+					"name": "Get Incoming",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/incoming",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"incoming"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Incoming By Kode",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/incoming/:kode",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"incoming",
+								":kode"
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Incoming By SJ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/incoming/sj/:noSJ",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"incoming",
+								"sj",
+								":noSJ"
+							],
+							"variable": [
+								{
+									"key": "noSJ",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Incoming By PO",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/incoming/po/:po",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"incoming",
+								"po",
+								":po"
+							],
+							"variable": [
+								{
+									"key": "po",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Incoming By PO dan Product",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/incoming/po/:po/product/:codeProduct",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"incoming",
+								"po",
+								":po",
+								"product",
+								":codeProduct"
+							],
+							"variable": [
+								{
+									"key": "po",
+									"value": ""
+								},
+								{
+									"key": "codeProduct",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Incoming",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tanggal\": \"2024-05-26 00:00:00\",\r\n    \"product_code\": \"100051\",\r\n    \"no_po\": \"PO00001\",\r\n    \"qty_po\": 40,\r\n    \"no_sj\": \"SJ12345\",\r\n    \"qty_sj\": 10,\r\n    \"qty_ok\": 10,\r\n    \"qty_bad\": 0,\r\n    \"gap\": 0,\r\n    \"exp_date\": \"2024-05-25\",\r\n    \"rak_code\": \"GCK2-R011A1\",\r\n    \"satuan\": \"pcs\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/incoming",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"incoming"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Incoming",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tanggal\": \"2024-05-26 00:00:00\",\r\n    \"product_code\": \"100052\",\r\n    \"no_po\": \"PO00001\",\r\n    \"qty_po\": 40,\r\n    \"no_sj\": \"SJ12345\",\r\n    \"qty_sj\": 6,\r\n    \"qty_ok\": 6,\r\n    \"qty_bad\": 0,\r\n    \"gap\": 0,\r\n    \"exp_date\": \"2024-05-25\",\r\n    \"rak_code\": \"GCK2-R011A4\",\r\n    \"satuan\": \"pcs\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/incoming/:kode",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"incoming",
+								":kode"
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Incoming",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}/gtsdry/api/incoming/:kode",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"gtsdry",
+								"api",
+								"incoming",
+								":kode"
+							],
+							"variable": [
+								{
+									"key": "kode",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stok",
+			"item": [
+				{
+					"name": "Compare Stok vs transaksi all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						]
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"admin@admin.com\",\r\n    \"password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/gtsdry/api/login",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"gtsdry",
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Resto",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/gtsdry/api/resto",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"gtsdry",
+						"api",
+						"resto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Resto By Kategori",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/gtsdry/api/resto/:kategori",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"gtsdry",
+						"api",
+						"resto",
+						":kategori"
+					],
+					"variable": [
+						{
+							"key": "kategori",
+							"value": "jatim1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Resto By Kode",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/gtsdry/api/resto/kode/:kode",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"gtsdry",
+						"api",
+						"resto",
+						"kode",
+						":kode"
+					],
+					"variable": [
+						{
+							"key": "kode",
+							"value": "KDRJOY"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTYyOTUwNDgsImlkIjoiYWRtaW5AYWRtaW4uY29tIn0.zojwdF5crwtbsYPvFBo-ImKM8nuPiDgOds38UJFB3Sg",
+			"type": "string"
+		},
+		{
+			"key": "BaseURL",
+			"value": "http://127.0.0.1:7778",
+			"type": "string"
+		}
+	]
+}
